@@ -38,7 +38,7 @@ class SnakeGame extends AGame {
 
 
     draw() {
-        // TODO : effacer le canvas ici (avant de redessiner le serpent)
+        this.context.clearRect(0, 0, canvas.width, canvas.height);
         this.snake.renderTo(this.context);
     }
 }
