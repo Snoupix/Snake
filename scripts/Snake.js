@@ -19,6 +19,15 @@ class Snake {
         return this.body[0];
     }
 
+   turnLeft() {
+       this.angle -= Math.PI/2;
+   }
+
+
+   turnRight() {
+        this.angle += Math.PI/2;
+   }
+
 
     forward() {
         const delta = {
@@ -28,10 +37,59 @@ class Snake {
         const head = this._getHead();
         const newHead = {x: head.x + delta.x, y: head.y + delta.y};
 
-
+        if(this.isPointOnBody(newHead)){
+            return false;
+        }
         this._spawnNewHead(newHead);
         this._popOldTail();
+        return true;
     }
+
+       
+   grow() {
+        this._spawnNewHead(this._getHead());
+   }
+
+
+   // Le point est-il sur la tête du serpent ? Renvoyer true ou false.
+   // “point” à le format {x: _, y: _ }
+   isPointOnHead(point) {
+       var x1 = point.x;
+       var x2 = this._getHead().x;
+       var y1 = point.y;
+       var y2 = this._getHead().y;
+
+       
+       if (Math.abs(x1 - x2) < 0.00001 && (Math.abs(y1 - y2) < 0.000001)){
+            return true;
+
+       }else{
+           return false;
+       }
+
+
+   }
+
+
+   // Le point est-t-il n'importe où sur le serpent (y compris la tête) ?  Renvoyer true ou false.
+   // “point” à le format {x: _, y: _ }
+   isPointOnBody(point) {
+       
+       var flag = false;
+this.body.forEach((node) => {
+    
+       var x1 = point.x;
+       var x2 = node.x;
+       var y1 = point.y;
+       var y2 = node.y;
+
+       if (Math.abs(x1 - x2) < 0.00001 && (Math.abs(y1 - y2) < 0.000001)){
+            flag =true;
+
+       }
+    });
+       return flag;
+   }
 
 
     renderTo(context) {
