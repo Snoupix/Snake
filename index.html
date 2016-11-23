@@ -5,14 +5,22 @@
     <link href='style/style.css' rel='stylesheet' type='text/css'>
     <script src="scripts/AGame.js"></script>
     <script src="scripts/Snake.js"></script>
+    <script src="scripts/ScoreText.js"></script>
     <script src="scripts/SnakeGame.js"></script>
     <script src="scripts/Food.js"></script>
+    <script src="scripts/StartScreenManager.js"></script>
 </head>
 <body onload="init()">
 <div id="frame">
     <canvas id="canvas" width="300" height="300"></canvas>
     <div id="startMenu">
         <span id="playButton" onclick="start()">START</span>
+              <br/><br/>
+        <span id="lastScoreLabel">Last score :</span>
+        <span id="lastScoreValue">0</span>
+        <br/>
+        <span id="bestScoreLabel">High score :</span>
+        <span id="bestScoreValue">0</span>
     </div>
 </div>
 </body>
@@ -29,6 +37,8 @@
 
 
     const init = () => {
+     StartScreenManager.updateLastScore();
+     StartScreenManager.updateBestScore();
         document.getElementById("frame").style.display = "block";
     };
     const start = () => {

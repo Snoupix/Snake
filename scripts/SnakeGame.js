@@ -6,6 +6,7 @@ class SnakeGame extends AGame {
 
         this.snake = new Snake();
         this.food = new Food();
+          this.score = new ScoreText();
     }
 
 
@@ -51,6 +52,7 @@ class SnakeGame extends AGame {
        if (this.snake.isPointOnHead(this.food.pos)) {
            this.snake.grow();
            this.food.respawn(this.snake);
+            this.score.inc();
 
 
    }
@@ -58,13 +60,29 @@ class SnakeGame extends AGame {
 
  // Masquer le canvas et afficher le menu
    onDestroy() {
-         this._hideCanvas();
+        
+           const lastScore = this.score.getScore();
+       localStorage.setItem("last_score", lastScore);
+       StartScreenManager.updateLastScore(lastScore);
+
+        const bestScore = localStorage.getItem("best_score");
+
+        if(lastScore > bestScore){
+            var newBestScore = lastScore;
+            localStorage.setItem("best_score", newBestScore);
+        }
+        StartScreenManager.updateBestScore(newBestScore);
+
+
+        this._hideCanvas();
          this._showStartMenu();
+
    }
 
     draw() {
         this.context.clearRect(0, 0, canvas.width, canvas.height);
         this.snake.renderTo(this.context);
         this.food.renderTo(this.context);
+         this.score.renderTo(this.context);
     }
 }
