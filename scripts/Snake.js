@@ -40,10 +40,24 @@ class Snake {
         if(this.isPointOnBody(newHead)){
             return false;
         }
+
+             // Si newHead est en dehors de l’aire de jeu ou à l’intérieur
+     // du corps du serpent, alors le serpent est mort. Retourner false.
+      if (newHead.x > (300 / TILE_SIZE) || newHead.x < 0 || newHead.y > (300 / TILE_SIZE) || newHead.y < 0 ){
+         
+           return false;
+      
+    }
+
         this._spawnNewHead(newHead);
         this._popOldTail();
         return true;
+
+        
     }
+
+
+    
 
        
    grow() {
